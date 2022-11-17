@@ -18,7 +18,23 @@ $arr = [
     'r2' => ['c1' => 7, 'c2' => 8, 'c3' => 12],
     'r3' => ['c1' => 25, 'c2' => 9, 'c3' => 130]
 ];
-?>
+
+
+// echo $arr["r1"]["c1"]+$arr["r2"]["c1"]+$arr["r3"]["c1"];
+
+// $c_arr[] = [];
+// for ($a=1; $a<=3; $a++) {
+//     $rr="r".$a;
+//     for ($p=1; $p<=3; $p++) {
+//         $w=0+$p;
+//         for ($q=1; $q<=3; $q++) {
+//             $cc="c".$w;
+//         }
+//         $c_arr[] = $arr[$rr][$cc];
+//     }
+// }
+// echo array_sum($c_arr);
+// ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -35,6 +51,60 @@ th, td {
 </style>
 </head>
 <body>
-    <!-- ここにテーブル表示 -->
+    <?php
+// 行の合計
+    $x_total = [
+    'r1' => array_sum($arr['r1']),
+    'r2' => array_sum($arr['r2']),
+    'r3' => array_sum($arr['r3']),
+    ];
+// 列の合計
+    $y_total = [
+    'c1' => array_sum(array_column($arr, 'c1')),
+    'c2' => array_sum(array_column($arr, 'c2')),
+    'c3' => array_sum(array_column($arr, 'c3')),
+    ];
+// 合計
+    // 繰り返し処理の外側でtotalを足していく
+    $total = 0;
+    foreach ($y_total as $y_num) {
+        $total = $total + $y_num;
+    }
+    ?>
+<!------ ここからテーブル表示 ------>
+    <table>
+    <?php
+// １行目
+    echo "<tr><td></td>";
+    for ($c_num=1; $c_num<=3; $c_num++) {
+        $c = 'c'. $c_num;
+        echo "<td>".$c."</td>";
+    }
+    echo "<td>横合計</td></tr>";
+
+// r1からr3を表示
+    for ($r_num=1; $r_num<=3; $r_num++) {
+        $r = "r".$r_num;
+        echo "<tr><td>".$r."</td>";
+// １行ずつcの値を表示
+        for ($c_num=1; $c_num<=3; $c_num++) {
+            $c='c'.$c_num;
+            echo "<td>{$arr[$r][$c]}</td>";
+        }
+// 横合計を表示
+        echo "<td>{$x_total[$r]}</td></tr>";
+    }
+
+// 縦の値の合計を３回繰り返して縦合計を表示
+    echo "<tr><td>縦合計</td>";
+    for ($num=1; $num<=3; $num++) {
+        $c = "c".$num;
+        echo "<td>{$y_total[$c]}</td>";
+    }
+
+// 合計を表示
+    echo "<td>{$total}</td></tr>";
+    ?>
+</table>
 </body>
 </html>
