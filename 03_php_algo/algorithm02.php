@@ -18,11 +18,32 @@
 // 100円玉で購入した場合、
 // 50円足りません。
 
-$yen = 10000;   // 購入金額
-$product = 150; // 商品金額
+$yen = 9999;   // 購入金額
+$product = 1; // 商品金額
 
-function calc($yen, $product) {
-    // この関数内に処理を記述
+function calc($yen, $product)
+{
+    // 貨幣の配列
+    $money = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
+    // お釣り 支払金額 - 商品の金額
+    $change = $yen - $product;
+    // もし、お釣りが発生したら処理実行
+    if ($change > 0) {
+        // お釣りを貨幣別に代入する為の空の配列
+        $change_list = [];
+        // 貨幣の種類(9種)の数分ループする
+        foreach ($money as $value) {
+            // 貨幣の種類をキーとして、値を代入
+            // intdivでお釣りを貨幣の金額で割る
+            // 戻り値がint型の為、小数点以下は切り捨て
+            $change_list[$value] = intdiv($change, $value);
+            // 残りのお釣りを更新
+            $change = $change % $value;
+        }
+        // お釣りの貨幣別リストをreturn
+        return $change_list;
+    }
+    return $change;
 }
 ?>
 <!DOCTYPE html>
@@ -34,6 +55,24 @@ function calc($yen, $product) {
 <body>
     <section>
         <!-- ここに結果表示 -->
+    <?php
+    $result = calc($yen, $product);
+    // もし、お釣りがあれば change_list
+    if (is_array($result)) {
+        echo "お釣り";
+    // 配列$change_listからforeachで金額と枚数を順番に出力
+        foreach ($result as $key => $value) {
+            echo $key.'円 x '.$value.'<br>';
+        }
+    // お釣りがない場合
+    } elseif ($result == 0) {
+        echo 'お釣りは0円です';
+    // お釣り$changeがマイナスの場合(支払金額が足りない場合)
+    } elseif ($result < 0) {
+    // absで負の整数を正の整数へ変換
+        echo  abs($result) . '円足りません。';
+    }
+    ?>
     </section>
 </body>
 </html>
