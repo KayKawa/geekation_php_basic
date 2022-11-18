@@ -28,7 +28,21 @@
 
 function nabeatsu($i)
 {
-    // この関数内に処理を記述
+// この関数内に処理を記述
+    for ($i=1; $i<=100; $i++) {
+        if ($i % 15 == 0) {
+            // 3と5で割り切れる
+            echo $i."アホわん"."<BR>";
+        } elseif ($i % 3 == 0) {
+            // 3で割り切れる
+            echo $i."アホ"."<BR>";
+        } elseif ($i % 5 == 0) {
+            // 5で割り切れる
+            echo $i."わん"."<BR>";
+        } else {
+            echo $i."<BR>";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -39,7 +53,10 @@ function nabeatsu($i)
 </head>
 <body>
     <section>
-        <!-- ここに結果表示 -->
+<!-- ここに結果表示 -->
+    <?php
+    nabeatsu(1)
+    ?>
     </section>
 </body>
 </html>
