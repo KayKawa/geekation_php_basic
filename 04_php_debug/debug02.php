@@ -1,4 +1,5 @@
 <?php
+namespace SelfIntroduction;
 
 // デバック練習
 // 氏名入力時に入力内容が表示されるようにプログラムを完成させてください。
@@ -24,7 +25,7 @@ class SelfIntroduction
         string $lastName,
         string $firstName,
         int $age,
-        string $hobby,
+        string $hobby
     ) {
         $this->lastName     = $lastName;
         $this->firstName    = $firstName;
@@ -53,6 +54,7 @@ if (! empty($_POST)) {
     $firstName        = $_POST['first_name'];
     $age              = $_POST['age'];
     $hobby            = $_POST['hobby'];
+    $selfIntroduction = new SelfIntroduction($lastName, $firstName, $age, $hobby);
     if ($selfIntroduction) {
         echo '私の名前は'.$selfIntroduction->getFullName().'年齢は'.$selfIntroduction->getAge().'です。';
         echo '<br>';
@@ -68,7 +70,7 @@ if (! empty($_POST)) {
 </head>
 <body>
     <section>
-    <form action='./debug02.php' method="post">
+    <form action='debug02.php' method="post">
         <label>姓</label>
         <input type="text" name="last_name"/>
         <label>名</label>
@@ -85,4 +87,3 @@ if (! empty($_POST)) {
     </section>
 </body>
 </html>
-
